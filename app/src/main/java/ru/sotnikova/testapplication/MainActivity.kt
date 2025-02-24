@@ -10,12 +10,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.sotnikova.testapplication.screens.FactOrPic
 import ru.sotnikova.testapplication.screens.Home
+import ru.sotnikova.testapplication.services.CatsFactViewModel
+import ru.sotnikova.testapplication.services.CatsFactViewModelFactory
+import ru.sotnikova.testapplication.services.RetrofitInstance.apiService
 import ru.sotnikova.testapplication.ui.theme.TestApplicationTheme
 
 
@@ -38,16 +41,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val viewModel: CatsFactViewModel = viewModel(factory = CatsFactViewModelFactory(apiService))
 
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.Home.route, //todo uncomment
-        //startDestination = NavRoutes.FactOrPic.route // todo: delete this line
+        startDestination = NavRoutes.Home.route,
     ) {
         composable("Home") { Home(navController) }
         composable("FactOrPic/{animal}") { backStackEntry ->
             val animal = backStackEntry.arguments?.getString("animal") ?: "default"
-            FactOrPic(navController, animal = animal)
+            FactOrPic(viewModel, animal, navController)
         }
     }
 }

@@ -17,7 +17,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,16 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ru.sotnikova.testapplication.NavRoutes
-import ru.sotnikova.testapplication.services.RetrofitClient
+import ru.sotnikova.testapplication.services.CatsFactViewModel
 
 @Composable
-fun FactOrPic(navController: NavHostController, animal: String) {
+fun FactOrPic(viewModel: CatsFactViewModel, animal: String, navController: NavHostController) {
 
     val scrollState = rememberScrollState()
-    val scope = rememberCoroutineScope()
-
-    var text: String = ""
-
+    val catsFactText by viewModel.catFactText.collectAsState()
 
     Column(
         modifier = Modifier
@@ -60,14 +58,7 @@ fun FactOrPic(navController: NavHostController, animal: String) {
                     .padding(start = 30.dp, end = 30.dp)
             ) {
                 Button(
-                    onClick = {
-                        navController.navigate(NavRoutes.Home.route) {
-                            popUpTo(NavRoutes.Home.route)
-                        }
-                    },
-//                    onClick = scope.launch {
-//                        text = HttpClient.getRandomCatFact().text
-//                    }, //todo
+                    onClick = { viewModel.fetchText(animal) },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
                     modifier = Modifier
@@ -78,13 +69,21 @@ fun FactOrPic(navController: NavHostController, animal: String) {
                         text = "Get a fact",
                         fontSize = 16.sp
                     )
-                } // todo: work with api!
+                }
+                if (catsFactText != null) {
+                    Text(
+                        text = catsFactText ?: "No fact text available",
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
+                } // todo: api resp
                 Spacer(modifier = Modifier.width(40.dp))
                 Button(
                     onClick = {
                         navController.navigate(NavRoutes.Home.route) {
                             popUpTo(NavRoutes.Home.route)
-                        } // todo: work with api!
+                        } // todo: api resp
                     },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
@@ -99,18 +98,18 @@ fun FactOrPic(navController: NavHostController, animal: String) {
                 }
             }
             Spacer(modifier = Modifier.height(50.dp))
-            Text(
-                text = RetrofitClient.getRandomCatFact().text, // todo
-                color = Color.White,
-                fontSize = 16.sp
-            ) // todo: text = api response
+//            Text(
+//                text = RetrofitClientV1.getRandomCatFact().text,
+//                color = Color.White,
+//                fontSize = 16.sp
+//            ) // todo: text = api response
             Spacer(modifier = Modifier.height(50.dp))
 //            Image(
 //                contentDescription = null,
 //                modifier = Modifier
 //                    .size(96.dp)
 //                    .padding(start = 40.dp)
-//            ) // todo: image = api response
+//            ) // todo: api resp
             Spacer(modifier = Modifier.height(50.dp))
             Button(
                 onClick = {

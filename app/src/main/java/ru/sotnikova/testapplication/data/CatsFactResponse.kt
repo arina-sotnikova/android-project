@@ -1,6 +1,6 @@
 package ru.sotnikova.testapplication.data
 
-data class CatsFact(
+data class CatsFactResponse(
     val text: String
 )
 
