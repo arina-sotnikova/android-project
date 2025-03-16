@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Test Application</string>
+
+    <!-- Home screen -->
+    <string name="home_screen_title">Animals Application</string>
+    <string name="home_screen_description">Select an animal and enjoy random info and pictures with them</string>
+    <string name="cats_title">CATS</string>
+    <string name="cats_description">Wonderful and mischievous</string>
+    <string name="cats_tap_text">Tap here if you want to see some data about cats</string>
+    <string name="dogs_title">DOGS</string>
+    <string name="dogs_description">Funny and loyal</string>
+    <string name="dogs_tap_text">Tap here if you want to see some data about dogs</string>
+    <string name="bears_title">BEARS</string>
+    <string name="bears_description">Sometimes may be sleepy, sometimes may be furious</string>
+    <string name="bears_tap_text">Tap here if you want to see some data about bears</string>
+    <string name="ducks_title">DUCKS</string>
+    <string name="ducks_description">Never ever try to make them nervous</string>
+    <string name="ducks_tap_text">Tap here if you want to see some data about ducks</string>
+
+
+    <!-- FactOrPic screen -->
+    <string name="button_get_fact">Get a fact</string>
+    <string name="fact_or_pic_title">Get a fact or a pic</string>
+    <string name="button_get_pic">Get a pic</string>
+    <string name="no_text">No text available</string>
+    <string name="button_home">Home</string>
+    <string name="async_image_description">Picture of an animal</string>
+    <string name="cat_image_description">Picture of a cat</string>
+    <string name="dog_image_description">Picture of a dog</string>
+    <string name="bear_image_description">Picture of a bear</string>
+    <string name="duck_image_description">Picture of a duck</string>
+    <string name="bear_fact_text">Brown bears know they are being hunted.</string>
+    <string name="duck_fact_text">Ducks have better vision than humans.</string>
+
 </resources>

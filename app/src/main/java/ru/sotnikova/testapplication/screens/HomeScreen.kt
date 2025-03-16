@@ -22,13 +22,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import ru.sotnikova.testapplication.R
+import ru.sotnikova.testapplication.data.Animals
 
 @Composable
-fun Home(navController: NavHostController) {
+fun Home(viewModel: HomeViewModel) {
 
     val scrollState = rememberScrollState()
 
@@ -40,7 +41,7 @@ fun Home(navController: NavHostController) {
             .verticalScroll(state = scrollState)
     ) {
         Text(
-            text = "Animals Application",
+            text = stringResource(R.string.home_screen_title),
             fontSize = 24.sp,
             color = Color.White,
             modifier = Modifier
@@ -48,7 +49,7 @@ fun Home(navController: NavHostController) {
                 .padding(top = 50.dp)
         )
         Text(
-            text = "Select an animal and enjoy random info and pictures with them",
+            text = stringResource(R.string.home_screen_description),
             fontSize = 16.sp,
             color = Color.White,
             modifier = Modifier
@@ -57,36 +58,39 @@ fun Home(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(30.dp))
         ButtonToFactOrPic(
-            navController = navController,
+            viewModel = viewModel,
             image = R.drawable.katze,
-            title = "CATS",
-            description = "Wonderful and mischievous\nTap here if you want to see some data about cats",
-            animal = "cats"
+            title = stringResource(R.string.cats_title),
+            description1 = stringResource(R.string.cats_description),
+            description2 = stringResource(R.string.cats_tap_text),
+            animal = Animals.CATS,
         )
         Spacer(modifier = Modifier.height(30.dp))
         ButtonToFactOrPic(
-            navController = navController,
+            viewModel = viewModel,
             image = R.drawable.chihuahua,
-            title = "DOGS",
-            description = "Funny and loyal\nTap here if you want to see some data about dogs",
-            animal = "dogs"
+            title = stringResource(R.string.dogs_title),
+            description1 = stringResource(R.string.dogs_description),
+            description2 = stringResource(R.string.dogs_tap_text),
+            animal = Animals.DOGS,
         )
         Spacer(modifier = Modifier.height(30.dp))
         ButtonToFactOrPic(
-            navController = navController,
+            viewModel = viewModel,
             image = R.drawable.bear,
-            title = "BEARS",
-            description = """Sometimes may be sleepy, sometimes may be furious...
-                |Tap here if you want to see some data about bears""".trimMargin(),
-            animal = "bears"
+            title = stringResource(R.string.bears_title),
+            description1 = stringResource(R.string.bears_description),
+            description2 = stringResource(R.string.bears_tap_text),
+            animal = Animals.BEARS,
         )
         Spacer(modifier = Modifier.height(30.dp))
         ButtonToFactOrPic(
-            navController = navController,
+            viewModel = viewModel,
             image = R.drawable.duck,
-            title = "DUCKS",
-            description = "Never ever try to make them nervous\nTap here if you want to see some data about ducks",
-            animal = "ducks"
+            title = stringResource(R.string.ducks_title),
+            description1 = stringResource(R.string.ducks_description),
+            description2 = stringResource(R.string.ducks_tap_text),
+            animal = Animals.DUCKS,
         )
         Spacer(modifier = Modifier.height(30.dp))
         Column(
@@ -107,14 +111,15 @@ fun Home(navController: NavHostController) {
 
 @Composable
 fun ButtonToFactOrPic(
-    navController: NavHostController,
+    viewModel: HomeViewModel,
     image: Int,
     title: String,
-    description: String,
-    animal: String
+    description1: String,
+    description2: String,
+    animal: Animals
 ) {
     Button(
-        onClick = { navController.navigate("FactOrPic/$animal") },
+        onClick = { viewModel.onAnimalClicked(animal) },
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
         modifier = Modifier
@@ -144,7 +149,13 @@ fun ButtonToFactOrPic(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = description,
+                    text = description1,
+                    fontSize = 14.sp,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = description2,
                     fontSize = 14.sp,
                     color = Color.White
                 )

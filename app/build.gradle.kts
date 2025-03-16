@@ -71,8 +71,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.recyclerview)
 
+    implementation(libs.androidx.activity)
+
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
+    implementation(libs.accompanist.coil)
+
     // glide
-    implementation(libs.glide)
+    //implementation(libs.glide)
+    //implementation(libs.accompanist.glide)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
