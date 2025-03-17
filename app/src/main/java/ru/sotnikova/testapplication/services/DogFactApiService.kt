@@ -6,5 +6,5 @@ import ru.sotnikova.testapplication.data.DogFactResponse
 
 interface DogFactApiService {
     @GET("/api/facts")
-    suspend fun getDogFact(): Response<List<DogFactResponse>>
+    suspend fun getDogFact(): Response<DogFactResponse>
 }

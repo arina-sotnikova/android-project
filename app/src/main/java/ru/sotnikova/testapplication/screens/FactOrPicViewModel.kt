@@ -88,8 +88,11 @@ class FactOrPicViewModel(
         viewModelScope.launch {
             try {
                 val response = dogFactApiService.getDogFact()
-                if (response.isSuccessful && response.body() != null) {
-                    _dogFactText.value = response.body()?.get(0).toString()
+                if (response.isSuccessful) {
+                    val facts = response.body()?.facts
+                    _dogFactText.value =
+                        if (!facts.isNullOrEmpty()) facts[0]
+                        else "No text available"
                 } else {
                     throw ApiException("Error ${response.code()} occurred")
                 }

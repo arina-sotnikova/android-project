@@ -4,5 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class DogFactResponse(
     @SerializedName("facts")
-    val facts: List<String>
+    val facts: List<String>,
+
+    @SerializedName("success")
+    val success: Boolean
 )
