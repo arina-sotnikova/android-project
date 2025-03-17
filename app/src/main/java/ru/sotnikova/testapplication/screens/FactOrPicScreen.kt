@@ -1,6 +1,7 @@
 package ru.sotnikova.testapplication.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,11 +19,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,6 +37,8 @@ import ru.sotnikova.testapplication.data.Animals
 
 @Composable
 fun FactOrPic(viewModel: FactOrPicViewModel, animal: Animals) {
+
+    ErrorToast(viewModel)
 
     val scrollState = rememberScrollState()
     val isApiCalled by viewModel.isApiCalled.collectAsState()
@@ -194,6 +199,19 @@ fun FactOrPic(viewModel: FactOrPicViewModel, animal: Animals) {
                     textAlign = TextAlign.Center
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun ErrorToast(viewModel: FactOrPicViewModel) {
+    val context = LocalContext.current
+    val errorFlow = viewModel.errorFlow.collectAsState()
+
+    errorFlow.value?.let { message ->
+        LaunchedEffect(key1 = message) {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            viewModel.clearErrorMessage()
         }
     }
 }

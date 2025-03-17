@@ -79,7 +79,7 @@ class FactOrPicViewModel(
                     throw ApiException("Error ${response.code()} occurred")
                 }
             } catch (e: Exception) {
-                _catFactText.value = e.message ?: "Unexpected error"
+                _errorFlow.value = e.message ?: "Unexpected error"
             }
         }
     }
@@ -97,7 +97,7 @@ class FactOrPicViewModel(
                     throw ApiException("Error ${response.code()} occurred")
                 }
             } catch (e: Exception) {
-                _dogFactText.value = e.message ?: "Unexpected error"
+                _errorFlow.value = e.message ?: "Unexpected error"
             }
         }
     }
@@ -127,8 +127,12 @@ class FactOrPicViewModel(
                     throw ApiException("Error ${response.code()} occurred")
                 }
             } catch (e: Exception) {
-                _dogImageUrl.value = e.message ?: "Unexpected error"
+                _errorFlow.value = e.message ?: "Unexpected error"
             }
         }
+    }
+
+    fun clearErrorMessage() {
+        _errorFlow.value = null
     }
 }
